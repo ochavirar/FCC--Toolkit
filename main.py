@@ -8,7 +8,7 @@ import ExpressionsProcessing
 # Tkinter Window Nav Configuration
 
 window = Tk()
-window.geometry("1472x730")
+window.geometry("1500x700")
 
 window.rowconfigure(0,weight=1)
 window.columnconfigure(0, weight=1)
@@ -47,6 +47,33 @@ def use_logical_expression(frame):
     print(n_d_booleans)
     full_dict = ExpressionsProcessing.evaluate_expression(n_d_booleans, final_expression, literals, denied_literals)
     print(full_dict)
+    createTable(final_expression, full_dict, frame)
+
+def createTable(final_expression, full_dict, frame):
+    canvasTable = tk.Canvas(frame, width =1000, height =500)
+    i = 0
+    x= 0
+    relativex= 0
+    relativey= 0
+    for variable in final_expression:
+        e = tk.Label(canvasTable, text=variable,font= "times 10")
+        e.pack()
+        e.place(relx=relativex,rely=relativey)
+        relativey = relativey + .01
+        for boolean in full_dict.get(i):
+            t = tk.Label(canvasTable, text=full_dict.get(i)[x],font= "times 10")
+            t.pack()
+            t.place(relx=relativex, rely=relativey)
+            x=x+1
+        relativex= relativex + .2    
+        i +=1
+        e = 0
+        t = 0
+    canvasTable.pack(fill='both',expand=True)
+
+            
+
+    
 
 
 
