@@ -27,7 +27,6 @@ def get_main_literals_values(literals):
 
 
 def get_denied_literals_values(normal_dictionary, denied_literals):
-    updated_dictionary = {}  # Dictionary to return
     support_variable = []  # Support var
     for i in denied_literals:  # For every denied literal
         substring = i[1]
@@ -46,10 +45,16 @@ def get_denied_literals_values(normal_dictionary, denied_literals):
 def evaluate_expression(dictionary, final_exp, literals, denied_literals):
     start = (len(denied_literals)+len(literals))
     temp_array = []
+    step = 0
     for i in range(start, len(final_exp), 1):
         temp_array.clear()
         print(final_exp[i])
-        for j in range(0, len(final_exp[i]), 1):
+        j = 0
+        result = []
+        if step >= 1:
+            temp_array.append(final_exp[i - 1])
+            j += len(final_exp[i - 1])
+        while j < len(final_exp[i]):
             if (111 < ord(final_exp[i][j]) <= 122) and (ord(final_exp[i][j]) != 118):
                 if final_exp[i][j-1] == '~':
                     temp_array.append(final_exp[i][j - 1:j+1])
@@ -57,10 +62,18 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
                     temp_array.append(final_exp[i][j])
             elif final_exp[i][j] == 'v':
                 temp_array.append(final_exp[i][j])
+                result = evaluate(dictionary, temp_array)
             elif final_exp[i][j] == '^':
                 temp_array.append(final_exp[i][j])
             elif final_exp[i][j] == '→':
                 temp_array.append(final_exp[i][j])
             elif final_exp[i][j] == '↔':
                 temp_array.append(final_exp[i][j])
-        print("Split:", temp_array)
+            j += 1
+        step += 1
+        dictionary[final_exp[i]] = result
+    return dictionary
+
+
+def evaluate(dictionary, array):
+    
