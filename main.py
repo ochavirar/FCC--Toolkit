@@ -53,11 +53,11 @@ def createTable(final_expression, full_dict, canvas):
         for bools in full_dict.get(variable):
             relativey= relativey + augmentationVariable_y   
             if bools == False:
-                t = tk.Label(canvasTable, text="False",font= "times 10")
+                t = tk.Label(canvasTable, text="F",font= "times 10")
                 t.pack()
                 t.place(x=relativex, y=relativey)    
             if bools == True:
-                t = tk.Label(canvasTable, text="True",font= "times 10")
+                t = tk.Label(canvasTable, text="V",font= "times 10")
                 t.pack()
                 t.place(x=relativex, y=relativey)              
         relativex= relativex + augmentationVariable_x
