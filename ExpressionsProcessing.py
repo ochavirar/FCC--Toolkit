@@ -62,7 +62,6 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
                     temp_array.append(final_exp[i][j])
             elif final_exp[i][j] == 'v':
                 temp_array.append(final_exp[i][j])
-                result = evaluate(dictionary, temp_array)
             elif final_exp[i][j] == '^':
                 temp_array.append(final_exp[i][j])
             elif final_exp[i][j] == '→':
@@ -71,9 +70,31 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
                 temp_array.append(final_exp[i][j])
             j += 1
         step += 1
+        result = evaluate(dictionary, temp_array)
         dictionary[final_exp[i]] = result
     return dictionary
 
 
 def evaluate(dictionary, array):
-    
+    exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
+    print(exp1, exp2, sep='||')
+    array_2 = []
+    index = 0
+    for i in range(len(exp1)):
+        if array[1] == 'v':
+            if (exp1[index] or exp2[index]) is True:
+                array_2.append(True)
+            else:
+                array_2.append(False)
+        if array[1] == '^':
+            if (exp1[index] and exp2[index]) is True:
+                array_2.append(True)
+            else:
+                array_2.append(False)
+        if array[1] == '→':
+            if (exp1[index] is True) and (exp2[index] is False):
+                array_2.append(False)
+            else:
+                array_2.append(True)
+        index += 1
+    return array_2
