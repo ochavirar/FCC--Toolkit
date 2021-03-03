@@ -10,12 +10,18 @@ def look_for_literals(exp):  # This functions looks for literals and returns the
 def unrepeated_literals(literals):
     literals.sort()  # Sorted
     final_literals = literals  # Gets a copy from the original array
-    for i in range(0, len(literals)-1, 1):  # For every element in the array
-        for j in range(0, len(literals)-1, 1):  # For every element in the array
-            if (literals[i] == literals[j]) and (i != j):
-                final_literals.remove(literals[i])
-    return final_literals
-# Com 1
+    index_i = 0
+    index_j = 0
+    for i in final_literals:  # For every element in the array
+        index_j = 0
+        for j in final_literals:  # For every element in the array
+            if i == j and (index_j != index_i):
+                literals.remove(i)
+            index_j += 1
+        index_i += 1
+    print(final_literals)
+    return literals
+
 
 def look_for_denied_literals(exp):  # This function Locates denied literals.
     denied_literals = []  # Array to be returned.
