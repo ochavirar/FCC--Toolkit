@@ -49,7 +49,7 @@ def use_logical_expression(frame):
     print(full_dict)
     createTable(final_expression, full_dict, frame)
 
-def createTable(final_expression, full_dict, frame):
+""" def createTable(final_expression, full_dict, frame):
     canvasTable = tk.Canvas(frame, width =1000, height =500)
     i = 0
     x= 0
@@ -61,7 +61,7 @@ def createTable(final_expression, full_dict, frame):
         e.place(relx=relativex,rely=relativey)
         relativey = relativey + .01
         for boolean in full_dict.get(i):
-            t = tk.Label(canvasTable, text=full_dict.get(i)[x],font= "times 10")
+            t = tk.Label(canvasTable, text=full_dict.get(i)[x]w,font= "times 10")
             t.pack()
             t.place(relx=relativex, rely=relativey)
             x=x+1
@@ -69,9 +69,34 @@ def createTable(final_expression, full_dict, frame):
         i +=1
         e = 0
         t = 0
-    canvasTable.pack(fill='both',expand=True)
+    canvasTable.pack(fill='both',expand=True) """
 
             
+def createTable(final_expression, full_dict, frame):
+    canvasTable = tk.Canvas(frame, width =1000, height =500)
+    relativex= 0
+    relativey= 0
+
+    for variable in final_expression:
+        e = tk.Label(canvasTable, text=variable,font= "times 10")
+        e.pack()
+        e.place(relx=relativex,rely=relativey)
+        for bools in full_dict.get(variable):
+            relativey= relativey + .2    
+            if bools == False:
+                t = tk.Label(canvasTable, text="False",font= "times 10")
+                t.pack()
+                t.place(relx=relativex, rely=relativey)    
+            if bools == True:
+                t = tk.Label(canvasTable, text="True",font= "times 10")
+                t.pack()
+                t.place(relx=relativex, rely=relativey)              
+        relativex= relativex +.2 
+        relativey = 0
+        e = 0
+        t = 0
+    canvasTable.pack(fill='both',expand=True)
+    frame.create_window(100, 100, anchor=NW, window=canvasTable)
 
     
 
