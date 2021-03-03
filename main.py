@@ -19,7 +19,7 @@ print(NDBooleans)
 # Tkinter Window Nav Configuration
 
 window = Tk()
-window.state('zoomed')
+window.geometry("1472x730")
 
 window.rowconfigure(0,weight=1)
 window.columnconfigure(0, weight=1)
@@ -27,10 +27,12 @@ window.columnconfigure(0, weight=1)
 Frame1= tk.Frame(window)
 Frame2= tk.Frame(window)
 
-canvas1 = Canvas(Frame1, width=1472, height=729)
-canvas2 = Canvas(Frame2, width=1472, height=729)
-background = PhotoImage(file='bg.ppm')
-background2 = PhotoImage(file='bg2.ppm')
+logicalexpression= tk.StringVar()
+
+canvas1 = Canvas(Frame1, width=1472, height=730)
+canvas2 = Canvas(Frame2, width=1472, height=730)
+background = PhotoImage(file='bg1check.ppm')
+background2 = PhotoImage(file='bg2check.ppm')
 canvas1.pack()
 canvas2.pack()
 
@@ -42,20 +44,43 @@ for frame in (Frame1, Frame2):
     frame.grid(row=0,column=0,sticky='nsew')
 # Canvas 1 Code 
 
-canvas1_title = tk.Label(canvas1, text="Welcome to FCC Toolkit")
+canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35")
 canvas1_title.pack()
-canvas1_btn = tk.Button(canvas1, text = "Enter", command=lambda:show_frame(Frame2))
-canvas1_btn.pack()
+canvas1_title.place(relx= .33 , rely= .1)
+
+canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:show_frame(Frame2))
+canvas1_btn.pack(ipady=15)
+canvas1_btn.place(relx= .45 , rely= .45)
+
+canvas1_label= tk.Label(canvas1, text="Type a Logical Expression ", font = "times 20")
+canvas1_label.pack()
+canvas1_label.place(relx=.40, rely=.35)
+
+canvas1_property= tk.Label(canvas1, text="Created by Omar Chavira, Gabriel Olvera  ", font = "times 10")
+canvas1_property.pack()
+canvas1_property.place(relx=.85, rely=.9)
+
+canvas1_entry = tk.Entry(canvas1,width=64, textvariable=logicalexpression)
+canvas1_entry.pack()
+canvas1_entry.place(relx=.37, rely=.4)
+
 canvas1.create_image(0,0,anchor=NW, image=background)
+
 canvas1.pack(fill='both',expand=True)
 
 
 # Canvas 2 Code 
 
-canvas2_title = tk.Label(canvas2, text="This is your table")
+canvas2_title = tk.Label(canvas2, text="Truth Table: " ,font= "times 35")
 canvas2_title.pack()
-canvas2_btn = tk.Button(canvas2, text = "Enter", command=lambda:show_frame(Frame1))
+canvas2_title.place(relx= .05 , rely= .05)
+
+canvas2_btn = tk.Button(canvas2,height= 3, width= 20, text = "Back to Main Menu ", command=lambda:show_frame(Frame1))
 canvas2_btn.pack()
+canvas2_btn.place(relx= .8 , rely= .9)
+
+
+
 canvas2.create_image(0,0,anchor=NW, image=background2)
 canvas2.pack(fill='both',expand=True)
 
