@@ -31,67 +31,36 @@ def show_frame(frame):
 def use_logical_expression(frame, canvas):
     frame.tkraise()
     expression = logicalexpression.get()
-    # Testing Only Should Delete
     expression = expression.lower()
-    print(expression)
     literals = ExpressionSplitter.look_for_literals(expression)
-    print(literals)
     denied_literals = ExpressionSplitter.look_for_denied_literals(expression)
-    print(denied_literals)
     final_expression = ExpressionSplitter.get_final_expression(expression)
-    print(final_expression)
     booleans_dictionary = ExpressionsProcessing.get_main_literals_values(literals)
-    print(booleans_dictionary)
     n_d_booleans = ExpressionsProcessing.get_denied_literals_values(booleans_dictionary, denied_literals)
-    print(n_d_booleans)
-    full_dict = ExpressionsProcessing.split_subexpressions(n_d_booleans, final_expression, literals, denied_literals,
-                                                           expression)
-    print(full_dict)
+    full_dict = ExpressionsProcessing.split_subexpressions(n_d_booleans, final_expression, literals, denied_literals,expression)
     createTable(final_expression, full_dict, canvas)
-
-""" def createTable(final_expression, full_dict, frame):
-    canvasTable = tk.Canvas(frame, width =1000, height =500)
-    i = 0
-    x= 0
-    relativex= 0
-    relativey= 0
-    for variable in final_expression:
-        e = tk.Label(canvasTable, text=variable,font= "times 10")
-        e.pack()
-        e.place(relx=relativex,rely=relativey)
-        relativey = relativey + .01
-        for boolean in full_dict.get(i):
-            t = tk.Label(canvasTable, text=full_dict.get(i)[x]w,font= "times 10")
-            t.pack()
-            t.place(relx=relativex, rely=relativey)
-            x=x+1
-        relativex= relativex + .2    
-        i +=1
-        e = 0
-        t = 0
-    canvasTable.pack(fill='both',expand=True) """
-
-            
+       
 def createTable(final_expression, full_dict, canvas):
     canvasTable = tk.Canvas(canvas, width =1000, height =500)
     relativex= 0
     relativey= 0
-
+    augmentationVariable_x = 1000/len(final_expression)
+    augmentationVariable_y = 500/(len(full_dict.get(final_expression[0]))+1)
     for variable in final_expression:
         e = tk.Label(canvasTable, text=variable,font= "times 10")
         e.pack()
-        e.place(relx=relativex,rely=relativey)
+        e.place(x=relativex,y=relativey)
         for bools in full_dict.get(variable):
-            relativey= relativey + .1    
+            relativey= relativey + augmentationVariable_y   
             if bools == False:
                 t = tk.Label(canvasTable, text="False",font= "times 10")
                 t.pack()
-                t.place(relx=relativex, rely=relativey)    
+                t.place(x=relativex, y=relativey)    
             if bools == True:
                 t = tk.Label(canvasTable, text="True",font= "times 10")
                 t.pack()
-                t.place(relx=relativex, rely=relativey)              
-        relativex= relativex +.1 
+                t.place(x=relativex, y=relativey)              
+        relativex= relativex + augmentationVariable_x
         relativey = 0
         e = 0
         t = 0
