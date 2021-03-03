@@ -3,18 +3,7 @@ import tkinter as tk
 import ExpressionSplitter
 import ExpressionsProcessing
 
-Expression = input("Type a logical expression:")
-Expression = Expression.lower()
-Literals = ExpressionSplitter.look_for_literals(Expression)
-print(Literals)
-DeniedLiterals = ExpressionSplitter.look_for_denied_literals(Expression)
-print(DeniedLiterals)
-FinalExpression = ExpressionSplitter.get_final_expression(Expression)
-print(FinalExpression)
-BooleansDictionary = ExpressionsProcessing.get_main_literals_values(Literals)
-print(BooleansDictionary)
-NDBooleans = ExpressionsProcessing.get_denied_literals_values(BooleansDictionary, DeniedLiterals)
-print(NDBooleans) 
+
 
 # Tkinter Window Nav Configuration
 
@@ -40,15 +29,37 @@ canvas2.pack()
 def show_frame(frame):
     frame.tkraise()
 
+def useLogicalExpression(frame):
+    frame.tkraise()
+    Expression = logicalexpression.get()
+    #Testing Only Should Delete
+    Expression = Expression.lower()
+    Literals = ExpressionSplitter.look_for_literals(Expression)
+    print(Literals)
+    DeniedLiterals = ExpressionSplitter.look_for_denied_literals(Expression)
+    print(DeniedLiterals)
+    FinalExpression = ExpressionSplitter.get_final_expression(Expression)
+    print(FinalExpression)
+    BooleansDictionary = ExpressionsProcessing.get_main_literals_values(Literals)
+    print(BooleansDictionary)
+    NDBooleans = ExpressionsProcessing.get_denied_literals_values(BooleansDictionary, DeniedLiterals)
+    print(NDBooleans) 
+
+    
+
+
+
 for frame in (Frame1, Frame2):
     frame.grid(row=0,column=0,sticky='nsew')
+
+    
 # Canvas 1 Code 
 
 canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35")
 canvas1_title.pack()
 canvas1_title.place(relx= .33 , rely= .1)
 
-canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:show_frame(Frame2))
+canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:useLogicalExpression(Frame2))
 canvas1_btn.pack(ipady=15)
 canvas1_btn.place(relx= .45 , rely= .45)
 
@@ -80,12 +91,8 @@ canvas2_btn.pack()
 canvas2_btn.place(relx= .8 , rely= .9)
 
 
-
 canvas2.create_image(0,0,anchor=NW, image=background2)
 canvas2.pack(fill='both',expand=True)
-
-
-
 
 
 show_frame(Frame1)
