@@ -19,7 +19,6 @@ def unrepeated_literals(literals):
                 literals.remove(i)
             index_j += 1
         index_i += 1
-    print(final_literals)
     return literals
 
 
