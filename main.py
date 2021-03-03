@@ -45,7 +45,7 @@ def useLogicalExpression(frame):
     NDBooleans = ExpressionsProcessing.get_denied_literals_values(BooleansDictionary, DeniedLiterals)
     print(NDBooleans) 
 
-    
+
 
 
 
