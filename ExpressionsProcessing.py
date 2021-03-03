@@ -77,7 +77,6 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
 
 def evaluate(dictionary, array):
     exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
-    print(exp1, exp2, sep='||')
     array_2 = []
     index = 0
     for i in range(len(exp1)):
@@ -96,5 +95,10 @@ def evaluate(dictionary, array):
                 array_2.append(False)
             else:
                 array_2.append(True)
+        if array[1] == '↔':
+            if ((exp1[index] is True) and (exp2[index] is True)) or ((exp1[index] is False) and (exp2[index] is False)):
+                array_2.append(True)
+            else:
+                array_2.append(False)
         index += 1
     return array_2
