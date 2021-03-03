@@ -73,8 +73,49 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
             dictionary[final_exp[i]] = result
         return dictionary
     else:
-        for i in range(start, final_exp[i], 1):
-            pass
+        for i in range(start, len(final_exp), 1):
+            bigger = 0
+            blocked = False
+            temp_array.clear()
+            j = 0
+            if i == (len(final_exp)-1):
+                blocked = True
+                substring_1, substring_2 = "", ""
+                to_append = ""
+                for k in range(0, len(final_exp[i]), 1):
+                    if (final_exp[i][k] == 'v' or final_exp[i][k] == '^' or final_exp[i][k] == '→' or
+                            final_exp[i][k] == '↔') and (final_exp[i][k-1] == ')'):
+                        substring_1 = final_exp[i][0:k]
+                        print(substring_1)
+                        symbol = final_exp[i][k]
+                    if (final_exp[i][k] == 'v' or final_exp[i][k] == '^' or final_exp[i][k] == '→' or
+                            final_exp[i][k] == '↔') and (final_exp[i][k+1] == '('):
+                        substring_2 = final_exp[i][k+1:len(final_exp[i])]
+                        print(substring_2)
+                to_append = substring_1 + symbol + substring_2
+                temp_array.append(substring_1)
+                temp_array.append(symbol)
+                temp_array.append(substring_2)
+            elif step >= 1:
+                if final_exp[i].find(final_exp[i - 1]) != -1:
+                    temp_array.append(final_exp[i - 1])
+                    j += len(final_exp[i - 1])
+            while j < len(final_exp[i]) and blocked is False:
+                if ((111 < ord(final_exp[i][j]) <= 122) and (ord(final_exp[i][j]) != 118)) \
+                        or ord(final_exp[i][j]) == '(':
+                    if final_exp[i][j - 1] == '~':
+                        temp_array.append(final_exp[i][j - 1:j + 1])
+                    else:
+                        temp_array.append(final_exp[i][j])
+                elif (final_exp[i][j] == 'v' or final_exp[i][j] == '^' or final_exp[i][j] == '→' or
+                      final_exp[i][j] == '↔'):
+                    temp_array.append(final_exp[i][j])
+                j += 1
+            step += 1
+            print(temp_array)
+            result = evaluate(dictionary, temp_array)
+            dictionary[final_exp[i]] = result
+        return dictionary
 
 
 def evaluate(dictionary, array):

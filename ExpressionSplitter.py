@@ -36,7 +36,8 @@ def parentheses_indexes_search(exp):
     closed_parentheses = []  # Array to be returned
     closed_parentheses_2 = []
     for i in range(0, len(exp), 1):  # Goes from 0 to the array's length-1
-        if (exp[i] == '→' or exp[i] == '↔') and (exp[i - 1] == ')' and exp[i + 1] == '('):
+        if (exp[i] == '→' or exp[i] == '↔' or exp[i] == 'v' or exp[i] == '^') \
+                and (exp[i - 1] == ')' and exp[i + 1] == '('):
             open_parentheses.clear()
             closed_parentheses.clear()
             for j in range(i, len(exp), 1):
