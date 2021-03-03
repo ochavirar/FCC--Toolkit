@@ -31,20 +31,49 @@ def look_for_denied_literals(exp):  # This function Locates denied literals.
 
 
 def parentheses_indexes_search(exp):
+    is_divided = False
     open_parentheses = []  # Array to be returned
     closed_parentheses = []  # Array to be returned
+    closed_parentheses_2 = []
     for i in range(0, len(exp), 1):  # Goes from 0 to the array's length-1
-        if exp[i] == '(':  # If an opening parentheses is found then...
+        if (exp[i] == '→' or exp[i] == '↔') and (exp[i - 1] == ')' and exp[i + 1] == '('):
+            open_parentheses.clear()
+            closed_parentheses.clear()
+            for j in range(i, len(exp), 1):
+                if exp[j] == '(':
+                    open_parentheses.append(j)
+                    print(open_parentheses)
+                elif exp[j] == ')':
+                    closed_parentheses.append(j)
+                    print(closed_parentheses)
+            closed_parentheses.reverse()
+            for j in range(0, i, 1):
+                if exp[j] == '(':
+                    open_parentheses.append(j)
+                    print(open_parentheses)
+                elif exp[j] == ')':
+                    closed_parentheses_2.append(j)
+                    print(closed_parentheses)
+                closed_parentheses_2.reverse()
+            closed_parentheses += closed_parentheses_2
+            closed_parentheses = [len(exp)-1] + closed_parentheses
+            open_parentheses = [0] + open_parentheses
+            print("CP", closed_parentheses, "OP:", open_parentheses)
+            is_divided = True
+            return open_parentheses, closed_parentheses, is_divided
+        elif exp[i] == '(':  # If an opening parentheses is found then...
             open_parentheses.append(i)  # Open parentheses' index is added.
         elif exp[i] == ')':  # If an closing parentheses is found then...
             closed_parentheses.append(i)  # Closing parentheses' index is added
-    closed_parentheses.reverse()  # Closing parentheses is reversed to pair the opening and closing indexes
-    return open_parentheses, closed_parentheses
+    closed_parentheses.reverse()
+    # Closing parentheses is reversed to pair the opening and closing indexes
+    is_divided = False
+    return open_parentheses, closed_parentheses, is_divided
 
 
 def split_parentheses_expression(exp):
     split_expression = []  # Array for split expressions
-    open_parentheses, closed_parentheses = parentheses_indexes_search(exp)  # Gets opening an closing indexes
+    open_parentheses, closed_parentheses, trial = parentheses_indexes_search(exp)  # Gets opening an closing indexes
     for i in range(len(open_parentheses)-1, -1, -1):  # For i in parentheses' array length, decreasing
         expression_to_append = exp[open_parentheses[i]:closed_parentheses[i]+1]  # Gets the expression to append
         split_expression.append(expression_to_append)  # Appends expression within range

@@ -1,3 +1,6 @@
+import ExpressionSplitter
+
+
 def get_main_literals_values(literals):
     values_p_literal = 2**len(literals)  # Total values per literal
     final_evaluation = []  # Array to return
@@ -42,40 +45,39 @@ def get_denied_literals_values(normal_dictionary, denied_literals):
     return normal_dictionary
 
 
-def evaluate_expression(dictionary, final_exp, literals, denied_literals):
-    start = (len(denied_literals)+len(literals))
+def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
+    t1, t2, is_div = ExpressionSplitter.parentheses_indexes_search(exp)
+    start = (len(denied_literals) + len(literals))
     temp_array = []
     step = 0
-    for i in range(start, len(final_exp), 1):
-        temp_array.clear()
-        print(final_exp[i])
-        j = 0
-        if step >= 1:
-            temp_array.append(final_exp[i - 1])
-            j += len(final_exp[i - 1])
-        while j < len(final_exp[i]):
-            if (111 < ord(final_exp[i][j]) <= 122) and (ord(final_exp[i][j]) != 118):
-                if final_exp[i][j-1] == '~':
-                    temp_array.append(final_exp[i][j - 1:j+1])
-                else:
+    if is_div is False:
+        for i in range(start, len(final_exp), 1):
+            temp_array.clear()
+            print(final_exp[i])
+            j = 0
+            if step >= 1:
+                temp_array.append(final_exp[i - 1])
+                j += len(final_exp[i - 1])
+            while j < len(final_exp[i]):
+                if (111 < ord(final_exp[i][j]) <= 122) and (ord(final_exp[i][j]) != 118):
+                    if final_exp[i][j - 1] == '~':
+                        temp_array.append(final_exp[i][j - 1:j + 1])
+                    else:
+                        temp_array.append(final_exp[i][j])
+                elif (final_exp[i][j] == 'v' or final_exp[i][j] == '^' or final_exp[i][j] == '→' or
+                      final_exp[i][j] == '↔'):
                     temp_array.append(final_exp[i][j])
-            elif final_exp[i][j] == 'v':
-                temp_array.append(final_exp[i][j])
-            elif final_exp[i][j] == '^':
-                temp_array.append(final_exp[i][j])
-            elif final_exp[i][j] == '→':
-                temp_array.append(final_exp[i][j])
-            elif final_exp[i][j] == '↔':
-                temp_array.append(final_exp[i][j])
-            j += 1
-        step += 1
-        result = evaluate(dictionary, temp_array)
-        dictionary[final_exp[i]] = result
-    return dictionary
+                j += 1
+            step += 1
+            result = evaluate(dictionary, temp_array)
+            dictionary[final_exp[i]] = result
+        return dictionary
+    else:
+        for i in range(start, final_exp[i], 1):
+            pass
 
 
 def evaluate(dictionary, array):
-    print(array)
     exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
     array_2 = []
     index = 0
