@@ -28,7 +28,7 @@ def show_frame(frame):
     frame.tkraise()
 
 
-def use_logical_expression(frame):
+def use_logical_expression(frame, canvas):
     frame.tkraise()
     expression = logicalexpression.get()
     # Testing Only Should Delete
@@ -47,7 +47,7 @@ def use_logical_expression(frame):
     full_dict = ExpressionsProcessing.split_subexpressions(n_d_booleans, final_expression, literals, denied_literals,
                                                            expression)
     print(full_dict)
-    createTable(final_expression, full_dict, frame)
+    createTable(final_expression, full_dict, canvas)
 
 """ def createTable(final_expression, full_dict, frame):
     canvasTable = tk.Canvas(frame, width =1000, height =500)
@@ -72,8 +72,8 @@ def use_logical_expression(frame):
     canvasTable.pack(fill='both',expand=True) """
 
             
-def createTable(final_expression, full_dict, frame):
-    canvasTable = tk.Canvas(frame, width =1000, height =500)
+def createTable(final_expression, full_dict, canvas):
+    canvasTable = tk.Canvas(canvas, width =1000, height =500)
     relativex= 0
     relativey= 0
 
@@ -82,7 +82,7 @@ def createTable(final_expression, full_dict, frame):
         e.pack()
         e.place(relx=relativex,rely=relativey)
         for bools in full_dict.get(variable):
-            relativey= relativey + .2    
+            relativey= relativey + .1    
             if bools == False:
                 t = tk.Label(canvasTable, text="False",font= "times 10")
                 t.pack()
@@ -91,12 +91,12 @@ def createTable(final_expression, full_dict, frame):
                 t = tk.Label(canvasTable, text="True",font= "times 10")
                 t.pack()
                 t.place(relx=relativex, rely=relativey)              
-        relativex= relativex +.2 
+        relativex= relativex +.1 
         relativey = 0
         e = 0
         t = 0
     canvasTable.pack(fill='both',expand=True)
-    frame.create_window(100, 100, anchor=NW, window=canvasTable)
+    canvas.create_window(100, 100, anchor=NW, window=canvasTable)
 
     
 
@@ -114,7 +114,7 @@ canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35
 canvas1_title.pack()
 canvas1_title.place(relx= .33 , rely= .1)
 
-canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda: use_logical_expression(Frame2))
+canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda: use_logical_expression(Frame2,canvas2))
 canvas1_btn.pack(ipady=15)
 canvas1_btn.place(relx= .45 , rely= .45)
 
