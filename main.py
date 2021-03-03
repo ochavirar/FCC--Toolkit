@@ -3,18 +3,16 @@ import tkinter as tk
 import ExpressionSplitter
 import ExpressionsProcessing
 
-
-
 # Tkinter Window Nav Configuration
 
 window = Tk()
 window.geometry("1500x700")
 
-window.rowconfigure(0,weight=1)
+window.rowconfigure(0, weight=1)
 window.columnconfigure(0, weight=1)
 
-Frame1= tk.Frame(window)
-Frame2= tk.Frame(window)
+Frame1 = tk.Frame(window)
+Frame2 = tk.Frame(window)
 
 logicalexpression= tk.StringVar()
 
@@ -35,6 +33,7 @@ def use_logical_expression(frame):
     expression = logicalexpression.get()
     # Testing Only Should Delete
     expression = expression.lower()
+    print(expression)
     literals = ExpressionSplitter.look_for_literals(expression)
     print(literals)
     denied_literals = ExpressionSplitter.look_for_denied_literals(expression)
@@ -45,7 +44,8 @@ def use_logical_expression(frame):
     print(booleans_dictionary)
     n_d_booleans = ExpressionsProcessing.get_denied_literals_values(booleans_dictionary, denied_literals)
     print(n_d_booleans)
-    full_dict = ExpressionsProcessing.evaluate_expression(n_d_booleans, final_expression, literals, denied_literals)
+    full_dict = ExpressionsProcessing.split_subexpressions(n_d_booleans, final_expression, literals, denied_literals,
+                                                           expression)
     print(full_dict)
     createTable(final_expression, full_dict, frame)
 
@@ -89,7 +89,7 @@ canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35
 canvas1_title.pack()
 canvas1_title.place(relx= .33 , rely= .1)
 
-canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:use_logical_expression(Frame2))
+canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda: use_logical_expression(Frame2))
 canvas1_btn.pack(ipady=15)
 canvas1_btn.place(relx= .45 , rely= .45)
 
