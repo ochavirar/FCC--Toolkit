@@ -29,21 +29,24 @@ canvas2.pack()
 def show_frame(frame):
     frame.tkraise()
 
-def useLogicalExpression(frame):
+
+def use_logical_expression(frame):
     frame.tkraise()
-    Expression = logicalexpression.get()
-    #Testing Only Should Delete
-    Expression = Expression.lower()
-    Literals = ExpressionSplitter.look_for_literals(Expression)
-    print(Literals)
-    DeniedLiterals = ExpressionSplitter.look_for_denied_literals(Expression)
-    print(DeniedLiterals)
-    FinalExpression = ExpressionSplitter.get_final_expression(Expression)
-    print(FinalExpression)
-    BooleansDictionary = ExpressionsProcessing.get_main_literals_values(Literals)
-    print(BooleansDictionary)
-    NDBooleans = ExpressionsProcessing.get_denied_literals_values(BooleansDictionary, DeniedLiterals)
-    print(NDBooleans) 
+    expression = logicalexpression.get()
+    # Testing Only Should Delete
+    expression = expression.lower()
+    literals = ExpressionSplitter.look_for_literals(expression)
+    print(literals)
+    denied_literals = ExpressionSplitter.look_for_denied_literals(expression)
+    print(denied_literals)
+    final_expression = ExpressionSplitter.get_final_expression(expression)
+    print(final_expression)
+    booleans_dictionary = ExpressionsProcessing.get_main_literals_values(literals)
+    print(booleans_dictionary)
+    n_d_booleans = ExpressionsProcessing.get_denied_literals_values(booleans_dictionary, denied_literals)
+    print(n_d_booleans)
+    full_dict = ExpressionsProcessing.evaluate_expression(n_d_booleans, final_expression, literals, denied_literals)
+    print(full_dict)
 
 
 
@@ -59,7 +62,7 @@ canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35
 canvas1_title.pack()
 canvas1_title.place(relx= .33 , rely= .1)
 
-canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:useLogicalExpression(Frame2))
+canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda:use_logical_expression(Frame2))
 canvas1_btn.pack(ipady=15)
 canvas1_btn.place(relx= .45 , rely= .45)
 

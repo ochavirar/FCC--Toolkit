@@ -50,7 +50,6 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
         temp_array.clear()
         print(final_exp[i])
         j = 0
-        result = []
         if step >= 1:
             temp_array.append(final_exp[i - 1])
             j += len(final_exp[i - 1])
@@ -76,6 +75,7 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
 
 
 def evaluate(dictionary, array):
+    print(array)
     exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
     array_2 = []
     index = 0
@@ -96,7 +96,8 @@ def evaluate(dictionary, array):
             else:
                 array_2.append(True)
         if array[1] == '↔':
-            if ((exp1[index] is True) and (exp2[index] is True)) or ((exp1[index] is False) and (exp2[index] is False)):
+            if ((exp1[index] is True) and (exp2[index] is True)) or \
+                    ((exp1[index] is False) and (exp2[index] is False)):
                 array_2.append(True)
             else:
                 array_2.append(False)
