@@ -47,5 +47,20 @@ def evaluate_expression(dictionary, final_exp, literals, denied_literals):
     start = (len(denied_literals)+len(literals))
     temp_array = []
     for i in range(start, len(final_exp), 1):
+        temp_array.clear()
+        print(final_exp[i])
         for j in range(0, len(final_exp[i]), 1):
-            print(final_exp[i])
+            if (111 < ord(final_exp[i][j]) <= 122) and (ord(final_exp[i][j]) != 118):
+                if final_exp[i][j-1] == '~':
+                    temp_array.append(final_exp[i][j - 1:j+1])
+                else:
+                    temp_array.append(final_exp[i][j])
+            elif final_exp[i][j] == 'v':
+                temp_array.append(final_exp[i][j])
+            elif final_exp[i][j] == '^':
+                temp_array.append(final_exp[i][j])
+            elif final_exp[i][j] == '→':
+                temp_array.append(final_exp[i][j])
+            elif final_exp[i][j] == '↔':
+                temp_array.append(final_exp[i][j])
+        print("Split:", temp_array)
