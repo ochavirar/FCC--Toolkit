@@ -69,7 +69,8 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
                     temp_array.append(final_exp[i][j])
                 j += 1
             step += 1
-            result = evaluate(dictionary, temp_array)
+            count = i
+            result = evaluate(dictionary, temp_array, final_exp, count)
             dictionary[final_exp[i]] = result
         return dictionary
     else:
@@ -86,13 +87,13 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
                     if (final_exp[i][k] == 'v' or final_exp[i][k] == '^' or final_exp[i][k] == '→' or
                             final_exp[i][k] == '↔') and (final_exp[i][k-1] == ')'):
                         substring_1 = final_exp[i][0:k]
-                        print(substring_1)
                         symbol = final_exp[i][k]
                     if (final_exp[i][k] == 'v' or final_exp[i][k] == '^' or final_exp[i][k] == '→' or
                             final_exp[i][k] == '↔') and (final_exp[i][k+1] == '('):
                         substring_2 = final_exp[i][k+1:len(final_exp[i])]
-                        print(substring_2)
-                to_append = substring_1 + symbol + substring_2
+                    elif (final_exp[i][k] == 'v' or final_exp[i][k] == '^' or final_exp[i][k] == '→' or
+                            final_exp[i][k] == '↔') and (final_exp[i][k+1] == '~'):
+                        substring_2 = final_exp[i][k+1:len(final_exp[i])]
                 temp_array.append(substring_1)
                 temp_array.append(symbol)
                 temp_array.append(substring_2)
@@ -112,16 +113,23 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
                     temp_array.append(final_exp[i][j])
                 j += 1
             step += 1
-            print(temp_array)
-            result = evaluate(dictionary, temp_array)
+            print("TA:", temp_array)
+            count = i
+            result = evaluate(dictionary, temp_array, final_exp, count)
             dictionary[final_exp[i]] = result
         return dictionary
 
 
-def evaluate(dictionary, array):
+def evaluate(dictionary, array, exp, count):
     exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
-    array_2 = []
+    string = str(array[0])
+    print("String:", string)
+    print("Exp:", exp[count][0:2])
     index = 0
+    result = False
+    array_support = []
+    array_2 = []
+    visited = False
     for i in range(len(exp1)):
         if array[1] == 'v':
             if (exp1[index] or exp2[index]) is True:
@@ -144,5 +152,15 @@ def evaluate(dictionary, array):
                 array_2.append(True)
             else:
                 array_2.append(False)
+        print("Exp cnt", exp[count])
+        if exp[count][0:1] == '~':
+            visited = True
+            if array_2[index] is True:
+                result = False
+            else:
+                result = True
+            array_support.append(result)
         index += 1
+    if visited is True:
+        array_2 = array_support
     return array_2

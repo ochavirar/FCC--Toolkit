@@ -15,7 +15,7 @@ window.columnconfigure(0, weight=1)
 Frame1 = tk.Frame(window)
 Frame2 = tk.Frame(window)
 
-logicalexpression= tk.StringVar()
+logicalexpression = tk.StringVar()
 
 canvas1 = Canvas(Frame1, width=1472, height=730)
 canvas2 = Canvas(Frame2, width=1472, height=730)
@@ -40,7 +40,8 @@ def use_logical_expression(frame, canvas):
     n_d_booleans = ExpressionsProcessing.get_denied_literals_values(booleans_dictionary, denied_literals)
     full_dict = ExpressionsProcessing.split_subexpressions(n_d_booleans, final_expression, literals, denied_literals,expression)
     createTable(final_expression, full_dict, canvas)
-       
+
+
 def createTable(final_expression, full_dict, canvas):
     canvasTable = tk.Canvas(canvas, width =1000, height =500)
     relativex= 0
@@ -61,38 +62,32 @@ def createTable(final_expression, full_dict, canvas):
                 t = tk.Label(canvasTable, text="V",font= "times 10")
                 t.pack()
                 t.place(x=relativex, y=relativey)              
-        relativex= relativex + augmentationVariable_x
+        relativex = relativex + augmentationVariable_x
         relativey = 0
         e = 0
         t = 0
     canvasTable.pack(fill='both',expand=True)
     canvas.create_window(100, 100, anchor=NW, window=canvasTable)
 
-    
-
-
-
-
 
 for frame in (Frame1, Frame2):
     frame.grid(row=0,column=0,sticky='nsew')
 
-    
 # Canvas 1 Code 
 
 canvas1_title = tk.Label(canvas1, text="Welcome to FCC ToolKit", font= "times 35")
 canvas1_title.pack()
-canvas1_title.place(relx= .33 , rely= .1)
+canvas1_title.place(relx=.33, rely=.1)
 
 canvas1_btn = tk.Button(canvas1,height= 3, width= 20, text = "Get Table", command=lambda: use_logical_expression(Frame2,canvas2))
 canvas1_btn.pack(ipady=15)
-canvas1_btn.place(relx= .45 , rely= .45)
+canvas1_btn.place(relx=.45, rely=.45)
 
-canvas1_label= tk.Label(canvas1, text="Type a Logical Expression ", font = "times 20")
+canvas1_label= tk.Label(canvas1, text="Type a Logical Expression ", font="times 20")
 canvas1_label.pack()
 canvas1_label.place(relx=.40, rely=.35)
 
-canvas1_property= tk.Label(canvas1, text="Created by Omar Chavira, Gabriel Olvera  ", font = "times 10")
+canvas1_property= tk.Label(canvas1, text="Created by Omar Chavira, Gabriel Olvera  ", font="times 10")
 canvas1_property.pack()
 canvas1_property.place(relx=.85, rely=.9)
 
@@ -100,24 +95,24 @@ canvas1_entry = tk.Entry(canvas1,width=64, textvariable=logicalexpression)
 canvas1_entry.pack()
 canvas1_entry.place(relx=.37, rely=.4)
 
-canvas1.create_image(0,0,anchor=NW, image=background)
+canvas1.create_image(0, 0, anchor=NW, image=background)
 
-canvas1.pack(fill='both',expand=True)
+canvas1.pack(fill='both', expand=True)
 
 
 # Canvas 2 Code 
 
-canvas2_title = tk.Label(canvas2, text="Truth Table: " ,font= "times 35")
+canvas2_title = tk.Label(canvas2, text="Truth Table: ", font="times 35")
 canvas2_title.pack()
-canvas2_title.place(relx= .05 , rely= .05)
+canvas2_title.place(relx=.05, rely=.05)
 
-canvas2_btn = tk.Button(canvas2,height= 3, width= 20, text = "Back to Main Menu ", command=lambda:show_frame(Frame1))
+canvas2_btn = tk.Button(canvas2, height=3, width=20, text="Back to Main Menu ", command=lambda: show_frame(Frame1))
 canvas2_btn.pack()
 canvas2_btn.place(relx= .8 , rely= .9)
 
 
-canvas2.create_image(0,0,anchor=NW, image=background2)
-canvas2.pack(fill='both',expand=True)
+canvas2.create_image(0, 0, anchor=NW, image=background2)
+canvas2.pack(fill='both', expand=True)
 
 
 show_frame(Frame1)
