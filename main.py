@@ -6,6 +6,7 @@ import ExpressionsProcessing
 # Tkinter Window Nav Configuration
 
 window = Tk()
+window.title("FCC ToolKit")
 window.geometry("1500x700")
 
 window.rowconfigure(0, weight=1)
