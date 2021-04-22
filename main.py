@@ -4,6 +4,7 @@ import ExpressionSplitter
 import ExpressionsProcessing
 import sets_engine
 
+
 # Tkinter Window Nav Configuration
 decition = 0
 window = Tk()
@@ -17,6 +18,7 @@ Frame0 = tk.Frame(window)
 Frame1 = tk.Frame(window)
 Frame2 = tk.Frame(window)
 Frame3 = tk.Frame(window)
+Frame4 = tk.Frame(window)
 
 logicalexpression = tk.StringVar()
 optionSets = tk.StringVar()
@@ -25,17 +27,27 @@ Setb= tk.StringVar()
 Setc = tk.StringVar()
 Choice2= tk.StringVar()
 
+formulaa = tk.StringVar()
+lim_inf = tk.StringVar()
+lim_sup = tk.StringVar()
 
 canvas0 = Canvas(Frame0, width=1472, height=730)
 canvas1 = Canvas(Frame1, width=1472, height=730)
 canvas2 = Canvas(Frame2, width=1472, height=730)
 canvas3 = Canvas(Frame3, width=1472, height=730)
+canvas4 = Canvas(Frame4, width=1472, height=730)
+
 background = PhotoImage(file='bg1check.ppm')
 background2 = PhotoImage(file='bg2check.ppm')
+
 canvas0.pack()
 canvas1.pack()
 canvas2.pack()
 canvas3.pack()
+canvas4.pack()
+
+def goToSucs():
+    Frame4.tkraise()
 
 def goToOps():
     Frame3.tkraise()
@@ -45,6 +57,34 @@ def goToTruths():
 
 def show_frame(frame):
     frame.tkraise()
+
+def get_summation(expr, i_l, s_l):
+    result = eval(expr, {"x": s_l})
+    canvas4_text.insert(END, "Partial result: " + str(result) + "\n")
+    if s_l > i_l:
+        return result + get_summation(expr, i_l, s_l-1)
+    else:
+        return result
+
+
+def get_multiplicative(expr, i_l, s_l):
+    result = eval(expr, {"x": s_l})
+    if s_l > i_l:
+        return result * get_multiplicative(expr, i_l, s_l-1)
+    else:
+        return result
+
+
+
+def submitSucs():
+    expression = formulaa.get()
+    superiorlimite = lim_sup.get()
+    inferiorlimite = lim_inf.get()
+    multiplicable = get_multiplicative(expression,int(inferiorlimite), int(superiorlimite))
+    summation = get_summation(expression, int(inferiorlimite), int(superiorlimite))
+    canvas4_summation["text"] = summation
+    canvas4_multiplication["text"] = multiplicable
+
 
 def checkSubmitSet():
     decition = optionSets.get()
@@ -74,12 +114,6 @@ def continueProcedure():
     requested = sets_engine.get_requested_union(decition,option,set_a,set_b,set_c)
     print("this is requested", requested)
     canvas3_requested["text"] = requested
-
-
-
-
-
-
 
 def use_logical_expression(frame, canvas):
     frame.tkraise()
@@ -122,7 +156,7 @@ def createTable(final_expression, full_dict, canvas):
     canvas.create_window(100, 100, anchor=NW, window=canvasTable)
 
 
-for frame in (Frame0, Frame1, Frame2, Frame3):
+for frame in (Frame0, Frame1, Frame2, Frame3, Frame4):
     frame.grid(row=0,column=0,sticky='nsew')
 
 # Canvas 0 Code 
@@ -135,12 +169,16 @@ canvas0_Label =  tk.Label(canvas0, text="What Operation do you want?", font ="ti
 canvas0_Label.pack()
 canvas0_Label.place(relx=.30, rely=.2)
 
+canvas0_Btn = tk.Button(canvas0, height=20, width= 30, text="Sucessions", command=lambda: goToSucs())
+canvas0_Btn.pack(ipady=15)
+canvas0_Btn.place(relx=.10, rely=.45)
+
 canvas0_Btn = tk.Button(canvas0, height=20, width= 30, text="Sets Operations", command=lambda: goToOps())
 canvas0_Btn.pack(ipady=15)
-canvas0_Btn.place(relx=.30, rely=.45)
+canvas0_Btn.place(relx=.43, rely=.45)
 canvas0_BtnTruth = tk.Button(canvas0, height= 20, width =30 , text= "Truth Tables", command=lambda: goToTruths())
 canvas0_BtnTruth.pack(ipady=15)
-canvas0_BtnTruth.place(relx=.55, rely=.45)
+canvas0_BtnTruth.place(relx=.75, rely=.45)
 canvas0.create_image(0, 0, anchor=NW, image=background)
 
 canvas0.pack(fill='both', expand=True)
@@ -285,5 +323,70 @@ canvas3_bbtn.place(relx= .8 , rely= .9)
 canvas3.create_image(0, 0, anchor=NW, image=background2)
 canvas3.pack(fill='both', expand=True)
 
+#Canvas 4 code 
+canvas4_title = tk.Label(canvas4, text="Sets Operations", font= "times 35")
+canvas4_title.pack()
+canvas4_title.place(relx=.40, rely=.05)
+
+canvas4_formulalabel = tk.Label(canvas4, text="Enter Formula", font="times 20")
+canvas4_formulalabel.pack()
+canvas4_formulalabel.place(relx = .1, rely=.1)
+
+canvas4_formula = tk.Entry(canvas4,width=24, textvariable=formulaa)
+canvas4_formula.pack()
+canvas4_formula.place(relx=.1, rely=.16)
+
+canvas4_limsuplabel = tk.Label(canvas4, text="Limite Superior", font="times 20")
+canvas4_limsuplabel.pack()
+canvas4_limsuplabel.place(relx = .1, rely=.3)
+
+canvas4_limsup = tk.Entry(canvas4,width=24, textvariable=lim_sup)
+canvas4_limsup.pack()
+canvas4_limsup.place(relx=.1, rely=.36)
+
+canvas4_liminflabel = tk.Label(canvas4, text="Limite Inferior", font="times 20")
+canvas4_liminflabel.pack()
+canvas4_liminflabel.place(relx = .1, rely=.50)
+
+canvas4_liminf = tk.Entry(canvas4,width=24, textvariable=lim_inf)
+canvas4_liminf.pack()
+canvas4_liminf.place(relx=.1, rely=.56)
+
+canvas4_buttonsubmit = tk.Button(canvas4,height=2, width=10,text="Submit",command=lambda: submitSucs())
+canvas4_buttonsubmit.pack(ipady=10)
+canvas4_buttonsubmit.place(relx=.11, rely=.66)
+
+canvas4_text = Text(canvas4, font="times 6", height=50)
+canvas4_text.pack()
+canvas4_text.place(relx =.50, rely=.2)
+
+canvas4_summa = tk.Label(canvas4, text="Summation: ", font="times 20")
+canvas4_summa.pack()
+canvas4_summa.place(relx = .3, rely=.38)
+
+canvas4_summation = tk.Label(canvas4, text="", font= "times 20")
+canvas4_summation.pack()
+canvas4_summation.place(relx = .3, rely=.43)
+
+canvas4_mult = tk.Label(canvas4, text="Multiplicative: ", font="times 20")
+canvas4_mult.pack()
+canvas4_mult.place(relx = .3, rely=.60)
+
+canvas4_multiplication = tk.Label(canvas4, text="", font= "times 20")
+canvas4_multiplication.pack()
+canvas4_multiplication.place(relx = .3, rely=.65)
+
+canvas4_bbtn = tk.Button(canvas4, height=3, width=20, text="Back to Main Menu ", command=lambda: show_frame(Frame0))
+canvas4_bbtn.pack()
+canvas4_bbtn.place(relx= .9 , rely= .9)
+
+canvas4.create_image(0,0,anchor=NW, image=background2)
+canvas4.pack(fill='both', expand=True)
+
+
+
+
+
 show_frame(Frame0)
 window.mainloop()
+
