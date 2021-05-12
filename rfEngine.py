@@ -1,16 +1,18 @@
 def get_coordinates():
-    n = int(input("Coordinates: "))  # Number of coordinates
-    final_array = []  # Array to return
-    coordinate = []  # Coordinate array
-    for i in range(0, n, 1):
-        coordinate.clear()  # Deletes current coordinate values
-        x_value = int(input("x value: "))  # Gets x
-        y_value = int(input("y value: "))  # Gets y
-        coordinate.append(x_value)
-        coordinate.append(y_value)
-        temp_array = coordinate.copy()  # Temp gets coordinates values
-        final_array.append(temp_array)  # final array appends the value of temp
-    final_array.sort()  # Array of coordinates is sorted
+    coordinates = input("Coordinates x1,y1 x2,y2 x3,y3 [...]: ")
+    string_arrays = coordinates.split(' ')
+    coordinate_array = []
+    final_array = []
+    temp_array = []
+    for i in range(0, len(string_arrays), 1):
+        coordinate_array.clear()
+        x_value = int(string_arrays[i][0])
+        y_value = int(string_arrays[i][2])
+        coordinate_array.append(x_value)
+        coordinate_array.append(y_value)
+        temp_array = coordinate_array.copy()
+        final_array.append(temp_array)
+    final_array.sort()
     return final_array
 
 
