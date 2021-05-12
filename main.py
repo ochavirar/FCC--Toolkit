@@ -46,34 +46,38 @@ canvas2.pack()
 canvas3.pack()
 canvas4.pack()
 
+
 def goToSucs():
     Frame4.tkraise()
+
 
 def goToOps():
     Frame3.tkraise()
 
+
 def goToTruths():
     Frame1.tkraise()
+
 
 def show_frame(frame):
     frame.tkraise()
 
-def get_summation(expr, i_l, s_l):
-    result = eval(expr, {"x": s_l})
+
+def get_summation(expr, i_l, s_l):  # Returns summation
+    result = eval(expr, {"x": s_l})  # Evaluation from string, using "x"
     canvas4_text.insert(END, "Partial result: " + str(result) + "\n")
     if s_l > i_l:
-        return result + get_summation(expr, i_l, s_l-1)
+        return result + get_summation(expr, i_l, s_l-1)  # Recursive function
     else:
         return result
 
 
-def get_multiplicative(expr, i_l, s_l):
-    result = eval(expr, {"x": s_l})
+def get_multiplicative(expr, i_l, s_l):  # Returns multiplicative
+    result = eval(expr, {"x": s_l})  # Evaluation from string using "x"
     if s_l > i_l:
-        return result * get_multiplicative(expr, i_l, s_l-1)
+        return result * get_multiplicative(expr, i_l, s_l-1)  # Recursive function
     else:
         return result
-
 
 
 def submitSucs():

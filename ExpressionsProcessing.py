@@ -45,12 +45,13 @@ def get_denied_literals_values(normal_dictionary, denied_literals):
     return normal_dictionary
 
 
-def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
+def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):  # Splits all of the
+    # expression into smaller expressions.
     t1, t2, is_div = ExpressionSplitter.parentheses_indexes_search(exp)
     start = (len(denied_literals) + len(literals))
     temp_array = []
     step = 0
-    if is_div is False:
+    if is_div is False:  # When the operation is divided in two by a → operator.
         for i in range(start, len(final_exp), 1):
             temp_array.clear()
             print(final_exp[i])
@@ -73,7 +74,7 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
             result = evaluate(dictionary, temp_array, final_exp, count)
             dictionary[final_exp[i]] = result
         return dictionary
-    else:
+    else:  # When the operation is not divided
         for i in range(start, len(final_exp), 1):
             bigger = 0
             blocked = False
@@ -120,8 +121,8 @@ def split_subexpressions(dictionary, final_exp, literals, denied_literals, exp):
         return dictionary
 
 
-def evaluate(dictionary, array, exp, count):
-    exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])
+def evaluate(dictionary, array, exp, count):  # Evaluates every expression from the dictionary
+    exp1, exp2 = dictionary.get(array[0]), dictionary.get(array[2])  # Assign two dictionaries for local use
     string = str(array[0])
     print("String:", string)
     print("Exp:", exp[count][0:2])
@@ -131,29 +132,29 @@ def evaluate(dictionary, array, exp, count):
     array_2 = []
     visited = False
     for i in range(len(exp1)):
-        if array[1] == 'v':
+        if array[1] == 'v':  # OR logical expression
             if (exp1[index] or exp2[index]) is True:
                 array_2.append(True)
             else:
                 array_2.append(False)
-        if array[1] == '^':
+        if array[1] == '^':  # AND logical expression
             if (exp1[index] and exp2[index]) is True:
                 array_2.append(True)
             else:
                 array_2.append(False)
-        if array[1] == '→':
+        if array[1] == '→':  # Therefore evaluation
             if (exp1[index] is True) and (exp2[index] is False):
                 array_2.append(False)
             else:
                 array_2.append(True)
-        if array[1] == '↔':
+        if array[1] == '↔':  # If only evaluation
             if ((exp1[index] is True) and (exp2[index] is True)) or \
                     ((exp1[index] is False) and (exp2[index] is False)):
                 array_2.append(True)
             else:
                 array_2.append(False)
         print("Exp cnt", exp[count])
-        if exp[count][0:1] == '~':
+        if exp[count][0:1] == '~':  # NOT evaluation, taking the previous character to the expression
             visited = True
             if array_2[index] is True:
                 result = False
