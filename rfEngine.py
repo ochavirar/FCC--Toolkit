@@ -82,7 +82,6 @@ def get_co_domain(arr):
     for i in range(0, len(arr), 1):
         new_array.append(arr[i][1])  # Appends every x
     new_array.sort()
-    print(new_array)
     for i in range(len(arr) - 1, 0, -1):
         if len(arr) > 1 and new_array[i - 1] == new_array[i]:
             new_array.remove(new_array[i])  # Deletes repetitions
