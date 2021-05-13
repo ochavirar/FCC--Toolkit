@@ -72,19 +72,20 @@ def get_domain(arr):
         new_array.append(arr[i][0])  # Appends every x
     new_array.sort()
     for i in range(len(arr)-1, 0, -1):
-        if new_array[i-1] == new_array[i]:
-            new_array.remove(arr[i][0])  # Deletes repetitions
+        if len(arr) > 1 and new_array[i-1] == new_array[i]:
+            new_array.remove(new_array[i])  # Deletes repetitions
     return new_array
 
 
 def get_co_domain(arr):
     new_array = []
     for i in range(0, len(arr), 1):
-        new_array.append(arr[i][1])  # AAppends every y
+        new_array.append(arr[i][1])  # Appends every x
     new_array.sort()
-    for i in range(len(arr)-1, 0, -1):
-        if new_array[i-1] == new_array[i]:
-            new_array.remove(arr[i][0])  # Deletes repetitions
+    print(new_array)
+    for i in range(len(arr) - 1, 0, -1):
+        if len(arr) > 1 and new_array[i - 1] == new_array[i]:
+            new_array.remove(new_array[i])  # Deletes repetitions
     return new_array
 
 
