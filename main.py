@@ -464,15 +464,23 @@ canvas5_function.place(relx=.15, rely =.56)
 
 canvas5_domain = tk.Label(canvas5, text = "")
 canvas5_domain.pack()
-canvas5_domain.place(relx=.15, rely =.63)
+canvas5_domain.place(relx=.25, rely =.63)
 
 canvas5_codomain = tk.Label(canvas5, text = "")
 canvas5_codomain.pack()
-canvas5_codomain.place(relx=.15, rely =.70)
+canvas5_codomain.place(relx=.25, rely =.70)
 
 canvas5_btn = tk.Button(canvas5, height=3, width=20, text="Submit", command=lambda: doRelyFuc())
 canvas5_btn.pack()
 canvas5_btn.place(relx = .35, rely = .27)
+
+canvas5_ldomain = tk.Label(canvas5, text = "Domain : " , font= "times 10")
+canvas5_ldomain.pack()
+canvas5_ldomain.place(relx=.15, rely =.63)
+
+canvas5_lcodomain = tk.Label(canvas5, text = "Codomain : " , font= "times 10")
+canvas5_lcodomain.pack()
+canvas5_lcodomain.place(relx=.15, rely =.70)
 
 
 canvas5_bbtn = tk.Button(canvas5, height=3, width=20, text="Back to Main Menu ", command=lambda: show_frame(Frame0))
