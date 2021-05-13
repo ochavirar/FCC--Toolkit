@@ -3,6 +3,7 @@ import tkinter as tk
 import ExpressionSplitter
 import ExpressionsProcessing
 import sets_engine
+import rfEngine
 
 
 # Tkinter Window Nav Configuration
@@ -19,6 +20,7 @@ Frame1 = tk.Frame(window)
 Frame2 = tk.Frame(window)
 Frame3 = tk.Frame(window)
 Frame4 = tk.Frame(window)
+Frame5 = tk.Frame(window)
 
 logicalexpression = tk.StringVar()
 optionSets = tk.StringVar()
@@ -31,11 +33,14 @@ formulaa = tk.StringVar()
 lim_inf = tk.StringVar()
 lim_sup = tk.StringVar()
 
+coords = tk.StringVar()
+
 canvas0 = Canvas(Frame0, width=1472, height=730)
 canvas1 = Canvas(Frame1, width=1472, height=730)
 canvas2 = Canvas(Frame2, width=1472, height=730)
 canvas3 = Canvas(Frame3, width=1472, height=730)
 canvas4 = Canvas(Frame4, width=1472, height=730)
+canvas5 = Canvas(Frame5, width=1472, height=730)
 
 background = PhotoImage(file='bg1check.ppm')
 background2 = PhotoImage(file='bg2check.ppm')
@@ -45,6 +50,7 @@ canvas1.pack()
 canvas2.pack()
 canvas3.pack()
 canvas4.pack()
+canvas5.pack()
 
 
 def goToSucs():
@@ -61,6 +67,9 @@ def goToTruths():
 
 def show_frame(frame):
     frame.tkraise()
+
+def goToRelyFu():
+    Frame5.tkraise()
 
 
 def get_summation(expr, i_l, s_l):  # Returns summation
@@ -108,6 +117,38 @@ def checkSubmitSet():
     canvas3_Btn["width"] = 10
 
     canvas3_entry_choice2["width"] = 30
+
+
+def doRelyFuc():
+    parejas=coords.get()
+    arrey = []
+    arrey = rfEngine.get_coordinates(parejas)
+    if ( rfEngine.get_reflexivity(arrey) == 1):
+        canvas5_reflexivity["text"]= "Reflexivity: Yes"
+    else:
+        canvas5_reflexivity["text"]= "Reflexivity: No"
+
+    if ( rfEngine.get_symmetry(arrey) == 1):
+        canvas5_simmetry["text"]= "Simmetry: Yes"
+    else:
+        canvas5_simmetry["text"]= "Simmetry: No"
+
+    if ( rfEngine.get_transitivity(arrey) == 1):
+        canvas5_transivity["text"]= "Transivity: Yes"
+    else:
+        canvas5_transivity["text"]= "Transivity: No"
+    
+    if ( rfEngine.function_or_not(arrey) == 1):
+        canvas5_function["text"]= "Function: Yes"
+    else:
+        canvas5_function["text"]= "Function: No"
+
+    canvas5_domain["text"] = str(rfEngine.get_domain(arrey))
+    canvas5_codomain["text"] = str(rfEngine.get_co_domain(arrey))
+
+
+
+
 
 def continueProcedure():
     option = Choice2.get()
@@ -160,7 +201,7 @@ def createTable(final_expression, full_dict, canvas):
     canvas.create_window(100, 100, anchor=NW, window=canvasTable)
 
 
-for frame in (Frame0, Frame1, Frame2, Frame3, Frame4):
+for frame in (Frame0, Frame1, Frame2, Frame3, Frame4, Frame5):
     frame.grid(row=0,column=0,sticky='nsew')
 
 # Canvas 0 Code 
@@ -179,11 +220,16 @@ canvas0_Btn.place(relx=.10, rely=.45)
 
 canvas0_Btn = tk.Button(canvas0, height=20, width= 30, text="Sets Operations", command=lambda: goToOps())
 canvas0_Btn.pack(ipady=15)
-canvas0_Btn.place(relx=.43, rely=.45)
+canvas0_Btn.place(relx=.33, rely=.45)
+
 canvas0_BtnTruth = tk.Button(canvas0, height= 20, width =30 , text= "Truth Tables", command=lambda: goToTruths())
 canvas0_BtnTruth.pack(ipady=15)
-canvas0_BtnTruth.place(relx=.75, rely=.45)
+canvas0_BtnTruth.place(relx=.53, rely=.45)
 canvas0.create_image(0, 0, anchor=NW, image=background)
+
+canvas0_Bops = tk.Button(canvas0, height=20, width= 30, text="Relations and Functions", command=lambda: goToRelyFu())
+canvas0_Bops.pack(ipady=15)
+canvas0_Bops.place(relx=.73, rely=.45)
 
 canvas0.pack(fill='both', expand=True)
 
@@ -387,6 +433,54 @@ canvas4_bbtn.place(relx= .9 , rely= .9)
 canvas4.create_image(0,0,anchor=NW, image=background2)
 canvas4.pack(fill='both', expand=True)
 
+# Canvas 5 Code
+canvas5_title = tk.Label(canvas5, text="Functions and Relations", font= "times 35")
+canvas5_title.pack()
+canvas5_title.place(relx=.35, rely=.05)
+
+canvas5_label = tk.Label(canvas5, text= "Enter Ordered couples:  ", font = "times 12")
+canvas5_label.pack()
+canvas5_label.place(relx=.15, rely =.2)
+
+canvas5_parejasEntry = tk.Entry(canvas5,width=24, textvariable=coords)
+canvas5_parejasEntry.pack()
+canvas5_parejasEntry.place(relx=.15, rely =.27)
+
+canvas5_reflexivity = tk.Label(canvas5, text = "Reflexivity : ")
+canvas5_reflexivity.pack()
+canvas5_reflexivity.place(relx=.15, rely =.35)
+
+canvas5_simmetry = tk.Label(canvas5, text = "Symmetry : ")
+canvas5_simmetry.pack()
+canvas5_simmetry.place(relx=.15, rely =.42)
+
+canvas5_transivity = tk.Label(canvas5, text = "Transivity : ")
+canvas5_transivity.pack()
+canvas5_transivity.place(relx=.15, rely =.49)
+
+canvas5_function = tk.Label(canvas5, text = "Function: ")
+canvas5_function.pack()
+canvas5_function.place(relx=.15, rely =.56)
+
+canvas5_domain = tk.Label(canvas5, text = "")
+canvas5_domain.pack()
+canvas5_domain.place(relx=.15, rely =.63)
+
+canvas5_codomain = tk.Label(canvas5, text = "")
+canvas5_codomain.pack()
+canvas5_codomain.place(relx=.15, rely =.70)
+
+canvas5_btn = tk.Button(canvas5, height=3, width=20, text="Submit", command=lambda: doRelyFuc())
+canvas5_btn.pack()
+canvas5_btn.place(relx = .35, rely = .27)
+
+
+canvas5_bbtn = tk.Button(canvas5, height=3, width=20, text="Back to Main Menu ", command=lambda: show_frame(Frame0))
+canvas5_bbtn.pack()
+canvas5_bbtn.place(relx= .9 , rely= .9)
+
+canvas5.create_image(0,0,anchor=NW, image=background2)
+canvas5.pack(fill='both', expand=True)
 
 
 

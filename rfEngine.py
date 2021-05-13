@@ -1,5 +1,5 @@
-def get_coordinates():
-    coordinates = input("Coordinates x1,y1 x2,y2 x3,y3 [...]: ")
+def get_coordinates(streng):
+    coordinates = streng
     string_arrays = coordinates.split(' ')
     coordinate_array = []
     final_array = []
